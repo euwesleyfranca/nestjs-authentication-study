@@ -18,8 +18,6 @@ export class AuthenticationService {
 
     const user = await this.userRepository.findOne({ mail });
 
-    console.log(user);
-
     if (user && (await bcript.compare(password, user.password))) {
       const payload: AuthenticationPayload = { mail };
       const accessToken: string = await this.jwtService.sign(payload);

@@ -21,7 +21,6 @@ export class AuthenticationStrategy extends PassportStrategy(Strategy) {
     const { mail } = authenticationPayload;
 
     const user: User = await this.userRepository.findOne({ mail });
-    console.log(user);
 
     if (!user) {
       console.log('Usuário inválido');
