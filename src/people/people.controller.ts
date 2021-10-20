@@ -1,37 +1,42 @@
 import {
-  Body,
   Controller,
   Get,
-  HttpException,
-  HttpStatus,
   Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
 } from '@nestjs/common';
-import { PeopleDTO } from './dto/people.DTO';
-import { People } from './entity/people-entity';
 import { PeopleService } from './people.service';
+import { CreatePersonDto } from './dto/create-person.dto';
+import { UpdatePersonDto } from './dto/update-person.dto';
 
 @Controller('people')
 export class PeopleController {
-  constructor(private peopleService: PeopleService) {}
-  @Get()
-  async index(): Promise<People[]> {
-    return await this.peopleService.index();
-  }
+  constructor(private readonly peopleService: PeopleService) {}
 
   @Post()
-  async create(@Body() peopleDTO: PeopleDTO): Promise<People> {
-    const people = await this.peopleService.create(peopleDTO);
+  create(@Body() createPersonDto: CreatePersonDto) {
+    return this.peopleService.create(createPersonDto);
+  }
 
-    try {
-      return people;
-    } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: 'This is a custom message',
-        },
-        HttpStatus.FORBIDDEN,
-      );
-    }
+  @Get()
+  findAll() {
+    return this.peopleService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.peopleService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
+    return this.peopleService.update(+id, updatePersonDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.peopleService.remove(+id);
   }
 }

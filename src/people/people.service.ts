@@ -1,28 +1,40 @@
 import { Injectable } from '@nestjs/common';
-import { PeopleDTO } from './dto/people.DTO';
-import { PeopleRepository } from './peopleRepository';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from 'src/user/user-repository';
-import { People } from './entity/people-entity';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreatePersonDto } from './dto/create-person.dto';
+import { UpdatePersonDto } from './dto/update-person.dto';
 
 @Injectable()
 export class PeopleService {
-  constructor(
-    @InjectRepository(PeopleRepository)
-    private peopleRepository: PeopleRepository,
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  async index(): Promise<People[]> {
-    return this.peopleRepository.find();
+  async create(createPersonDto: CreatePersonDto) {
+    return await this.prisma.people.create({
+      data: {
+        first_name: createPersonDto.first_name,
+        last_name: createPersonDto.last_name,
+        country: createPersonDto.country,
+        state: createPersonDto.state,
+        city: createPersonDto.city,
+        status: true,
+        createdAt: createPersonDto.createdAt,
+        updatedAt: createPersonDto.updatedAt,
+      },
+    });
   }
 
-  async create(peopleDTO: PeopleDTO): Promise<People> {
-    const people = await this.peopleRepository.createPeople(peopleDTO);
+  findAll() {
+    return this.prisma.people.findMany();
+  }
 
-    await this.userRepository.createUser(peopleDTO, people);
+  findOne(id: number) {
+    return `This action returns a #${id} person`;
+  }
 
-    return people;
+  update(id: number, updatePersonDto: UpdatePersonDto) {
+    return `This action updates a #${id} person`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} person`;
   }
 }

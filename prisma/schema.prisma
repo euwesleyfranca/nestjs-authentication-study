@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model People {
+  id         String   @id @default(uuid())
+  first_name String
+  last_name  String
+  country    String
+  state      String
+  city       String 
+  status     Boolean  @default(true)
+  createdAt  DateTime @db.DateTime
+  updatedAt  DateTime @db.DateTime
+  user       User?
+  @@map("people")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  people     People   @relation(fields: [people_id], references: [id])
+  people_id  String
+  mail       String   @unique
+  username   String?
+  password   String   
+  compare_password String
+
+  @@map("user")
+}
