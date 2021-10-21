@@ -1,6 +1,5 @@
 import { Person } from '../entities/person.entity';
 import { IsEmail, IsString } from 'class-validator';
-import { User } from '.prisma/client';
 
 export class CreatePersonDto extends Person {
   @IsString()
@@ -11,6 +10,9 @@ export class CreatePersonDto extends Person {
 
   @IsEmail()
   mail: string;
+
+  @IsString()
+  username: string;
 
   @IsString()
   password: string;

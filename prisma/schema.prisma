@@ -15,20 +15,24 @@ model People {
   state      String
   city       String 
   status     Boolean  @default(true)
-  createdAt  DateTime @db.DateTime
-  updatedAt  DateTime @db.DateTime
+  day        String
+  month      String
+  year       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
   user       User?
   @@map("people")
 }
 
 model User {
-  id         String   @id @default(uuid())
-  people     People   @relation(fields: [people_id], references: [id])
-  people_id  String
+  id         String   @id @default(uuid())  
   mail       String   @unique
   username   String?
   password   String   
   compare_password String
 
+  people People @relation(fields: [peopleId], references: [id])
+  peopleId String
+  
   @@map("user")
 }

@@ -10,6 +10,9 @@ export class Person implements Prisma.PeopleUncheckedCreateInput {
   country: string;
   state: string;
   city: string;
+  day: string;
+  month: string;
+  year: string;
   status: boolean;
   createdAt: string | Date;
   updatedAt: string | Date;
