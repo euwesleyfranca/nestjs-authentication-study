@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import * as bcrypt from 'bcrypt';
+import { UpdatePersonDto } from './dto/update-person.dto';
 
 @Injectable()
 export class PersonRepository {
@@ -38,5 +39,40 @@ export class PersonRepository {
 
   async allPerson() {
     return this.prisma.people.findMany();
+  }
+
+  async findOne(id: string) {
+    return this.prisma.people.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  async update(id, updatePersonDto: UpdatePersonDto) {
+    return this.prisma.people.update({
+      where: {
+        id: id,
+      },
+      data: {
+        first_name: updatePersonDto.first_name,
+        last_name: updatePersonDto.last_name,
+        country: updatePersonDto.country,
+        state: updatePersonDto.state,
+        city: updatePersonDto.city,
+        status: updatePersonDto.status,
+        day: updatePersonDto.day,
+        month: updatePersonDto.month,
+        year: updatePersonDto.year,
+      },
+    });
+  }
+
+  async remove(id: string) {
+    return this.prisma.people.delete({
+      where: {
+        id: id,
+      },
+    });
   }
 }

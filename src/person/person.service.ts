@@ -4,7 +4,7 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 import { PersonRepository } from './person.repository';
 
 @Injectable()
-export class PeopleService {
+export class PersonService {
   constructor(private personRepository: PersonRepository) {}
 
   async create(createPersonDto: CreatePersonDto) {
@@ -15,15 +15,15 @@ export class PeopleService {
     return this.personRepository.allPerson();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  findOne(id: string) {
+    return this.personRepository.findOne(id);
   }
 
-  update(id: number, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${id} person`;
+  update(id: string, updatePersonDto: UpdatePersonDto) {
+    return this.personRepository.update(id, updatePersonDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} person`;
+  remove(id: string) {
+    return this.personRepository.remove(id);
   }
 }
