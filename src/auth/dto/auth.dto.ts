@@ -6,7 +6,7 @@ export class AuthDto {
       'O campo email não podeestar vazio, por favor preencha e tente novamente!',
   })
   @IsString()
-  email: string;
+  mail: string;
 
   @IsNotEmpty({
     message:
