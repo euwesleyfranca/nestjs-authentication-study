@@ -7,9 +7,9 @@ export class Person implements Prisma.PeopleUncheckedCreateInput {
   mail: string;
   password: string;
   compare_password: string;
-  country: string;
-  state: string;
-  city: string;
+  country_id: number;
+  state_id: number;
+  city_id: number;
   day: string;
   month: string;
   year: string;

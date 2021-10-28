@@ -2,6 +2,7 @@ import { Person } from '../entities/person.entity';
 import {
   IsAlpha,
   IsEmail,
+  IsInt,
   IsNotEmpty,
   IsString,
   Matches,
@@ -41,17 +42,17 @@ export class CreatePersonDto extends Person {
   @IsNotEmpty({ message: 'O campo confimação de senha não pode estar vazio!' })
   compare_password: string;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty({ message: 'O campo País não pode estar vazio!' })
-  country: string;
+  country_id: number;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty({ message: 'O campo Estado não pode estar vazio!' })
-  state: string;
+  state_id: number;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty({ message: 'O campo Cidade não pode estar vazio!' })
-  city: string;
+  city_id: number;
 
   @IsString()
   @IsNotEmpty({ message: 'O campo dia não pode estar vazio!' })

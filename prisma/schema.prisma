@@ -7,13 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Country {
+  id Int @id @default(autoincrement())
+  country String @unique  
+  flag String @unique
+  state State[]
+  people People[]
+  @@map(name: "country")
+}
+
+model State {
+  id Int @id @default(autoincrement())
+  state String @unique
+  country Country @relation(fields: [country_id], references: [id], onDelete: Cascade)
+  country_id Int 
+  city City[]
+  people People[]
+  @@map(name: "state")
+}
+
+model City {
+  id Int   @id @default(autoincrement())
+  city     String @unique
+  state    State @relation(fields: [state_id], references: [id], onDelete: Cascade)
+  state_id Int 
+  people   People[]
+  @@map(name: "city")
+}
+
 model People {
   id         String   @id @default(uuid())
   first_name String
   last_name  String
-  country    String
-  state      String
-  city       String 
+  country    Country @relation(fields: [country_id], references: [id], onDelete: Cascade)
+  country_id Int
+  state      State @relation(fields: [state_id], references: [id], onDelete: Cascade)
+  state_id   Int
+  city       City @relation(fields: [city_id], references: [id], onDelete: Cascade)
+  city_id    Int 
   status     Boolean  @default(true)
   day        String
   month      String

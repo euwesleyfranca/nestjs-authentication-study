@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import * as bcrypt from 'bcrypt';
 import { UpdatePersonDto } from './dto/update-person.dto';
@@ -16,9 +16,9 @@ export class PersonRepository {
       data: {
         first_name: createPersonDto.first_name,
         last_name: createPersonDto.last_name,
-        country: createPersonDto.country,
-        state: createPersonDto.state,
-        city: createPersonDto.city,
+        country_id: createPersonDto.country_id,
+        state_id: createPersonDto.state_id,
+        city_id: createPersonDto.city_id,
         day: createPersonDto.day,
         month: createPersonDto.month,
         year: createPersonDto.year,
@@ -57,9 +57,9 @@ export class PersonRepository {
       data: {
         first_name: updatePersonDto.first_name,
         last_name: updatePersonDto.last_name,
-        country: updatePersonDto.country,
-        state: updatePersonDto.state,
-        city: updatePersonDto.city,
+        country_id: updatePersonDto.country_id,
+        state_id: updatePersonDto.state_id,
+        city_id: updatePersonDto.city_id,
         status: updatePersonDto.status,
         day: updatePersonDto.day,
         month: updatePersonDto.month,
